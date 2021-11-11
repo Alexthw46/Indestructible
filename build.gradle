@@ -17,9 +17,9 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '0.1'
+version = "${mc_version}-${mod_version}"
 group = 'alexthw.indestructible' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'indestructible'
+archivesBaseName = project.mod_id
 
 // Mojang ships Java 16 to end users in 1.17+ instead of Java 8 in 1.16 or lower, so your mod should target Java 16.
 java.toolchain.languageVersion = JavaLanguageVersion.of(16)
@@ -108,8 +108,8 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
-     compileOnly fg.deobf("mezz.jei:jei-1.17.1:8.2.0.34:api") // Adds JEI API as a compile dependency
-     runtimeOnly fg.deobf("mezz.jei:jei-1.17.1:8.2.0.34") // Adds the full JEI mod as a runtime dependency
+     compileOnly fg.deobf("mezz.jei:jei-$mc_version:8.2.0.34:api") // Adds JEI API as a compile dependency
+     runtimeOnly fg.deobf("mezz.jei:jei-$mc_version:8.2.0.34") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
 }
@@ -119,11 +119,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "indestructible",
-                "Specification-Vendor"    : "indestructiblesareus",
+                "Specification-Vendor"    : "indestructible",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "indestructiblesareus",
+                "Implementation-Vendor"   : "indestructible",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "MixinConfigs": "indestructible.mixins.json"
         ])

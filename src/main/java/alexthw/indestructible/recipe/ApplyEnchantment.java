@@ -6,29 +6,25 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nonnull;
 
 public class ApplyEnchantment extends UpgradeRecipe {
 
-    public static final RecipeSerializer<?> SERIALIZER = new SimpleRecipeSerializer<>(ApplyEnchantment::new);
-
     public ApplyEnchantment(ResourceLocation pId) {
-        super(pId, Ingredient.EMPTY , Ingredient.of(Blocks.BEDROCK), ItemStack.EMPTY);
+        super(pId, Ingredient.EMPTY , Ingredient.of(Registry.INDESTRUCTIBLE_GEM.get()), ItemStack.EMPTY);
     }
 
     @Override
     public boolean matches(Container inv, @Nonnull Level world) {
         ItemStack input = inv.getItem(0);
         
-        if (!input.isDamageableItem() || !input.isEnchantable() || EnchantmentHelper.getEnchantmentLevel(input.getOrCreateTag()) > 0) {
+        if (!input.isDamageableItem() || !input.isEnchantable()) {
             return false;
         }
+
         return this.isAdditionIngredient(inv.getItem(1));
     }
 
@@ -52,7 +48,7 @@ public class ApplyEnchantment extends UpgradeRecipe {
     @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+        return Registry.ENCHANT_SERIALIZER.get();
     }
 
     @Override

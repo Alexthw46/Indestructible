@@ -2,7 +2,6 @@ package alexthw.indestructible;
 
 import alexthw.indestructible.init.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +20,6 @@ public class IndestructibleMod
     public IndestructibleMod() {
         // Register the setup method for modloading
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addGenericListener(RecipeSerializer.class,Registry::registerRecipeSerializers);
         Registry.init(bus);
 
         // Register ourselves for server and other game events we are interested in
