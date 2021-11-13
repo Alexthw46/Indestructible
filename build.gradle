@@ -103,12 +103,12 @@ mixin {
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.104'
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.108'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
-     compileOnly fg.deobf("mezz.jei:jei-$mc_version:8.2.0.34:api") // Adds JEI API as a compile dependency
+    //compileOnly fg.deobf("mezz.jei:jei-$mc_version:8.2.0.34:api") // Adds JEI API as a compile dependency
      runtimeOnly fg.deobf("mezz.jei:jei-$mc_version:8.2.0.34") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 

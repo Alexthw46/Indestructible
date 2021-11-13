@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "indestructible:block/gem_crafting_block"
+  }
+}

@@ -1,13 +1,15 @@
 package alexthw.indestructible.datagen;
 
-import alexthw.indestructible.IndestructibleMod;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
-@Mod.EventBusSubscriber(modid = IndestructibleMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+import static alexthw.indestructible.IndestructibleMod.MODID;
+
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 
 public final class ModDataGen {
 
@@ -18,8 +20,12 @@ public final class ModDataGen {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        BlockTagsProvider btp = new ModBlockTagProvider(gen,existingFileHelper);
 
+        gen.addProvider(btp);
         gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
-
+        gen.addProvider(new ModBlockStatesProvider(gen, existingFileHelper));
+        gen.addProvider(new ModItemTagProvider(gen, btp,existingFileHelper));
+        gen.addProvider(new ModRecipeProvider(gen));
     }
 }

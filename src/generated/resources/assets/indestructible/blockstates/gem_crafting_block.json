@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "indestructible:block/gem_crafting_block"
+    }
+  }
+}

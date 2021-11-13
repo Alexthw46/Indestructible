@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "indestructible:indestructible_gem"
+    ]
+  },
+  "criteria": {
+    "netherite_discovered": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_scrap"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "indestructible:indestructible_gem"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite_discovered",
+      "has_the_recipe"
+    ]
+  ]
+}

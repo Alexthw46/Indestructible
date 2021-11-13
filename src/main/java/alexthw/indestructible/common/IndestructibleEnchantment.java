@@ -1,9 +1,11 @@
-package alexthw.indestructible.enchantment;
+package alexthw.indestructible.common;
 
+import alexthw.indestructible.init.ModTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class IndestructibleEnchantment extends Enchantment {
     public IndestructibleEnchantment(Rarity pRarity, EquipmentSlot... pApplicableSlots) {
@@ -11,7 +13,11 @@ public class IndestructibleEnchantment extends Enchantment {
     }
 
     public boolean canEnchant(ItemStack pStack) {
-        return (pStack.isDamageableItem() || super.canEnchant(pStack));
+        boolean result = pStack.isDamageableItem() || super.canEnchant(pStack);
+        if (pStack.isEnchanted()){
+            result = result && EnchantmentHelper.getItemEnchantmentLevel(this,pStack) < 1;
+        }
+        return result && !pStack.getItem().getTags().contains(ModTag.Items.BLACKLIST.getName());
     }
 
     public int getMaxLevel() {
@@ -21,7 +27,7 @@ public class IndestructibleEnchantment extends Enchantment {
     /**
      * Checks if the enchantment should be considered a treasure enchantment. These enchantments can not be obtained
      * using the enchantment table. The mending enchantment is an example of a treasure enchantment.
-     * @return Whether or not the enchantment is a treasure enchantment.
+     * @return Whether the enchantment is a treasure enchantment.
      */
     public boolean isTreasureOnly() {
         return true;

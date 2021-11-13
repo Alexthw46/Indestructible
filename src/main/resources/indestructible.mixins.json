@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "indestructible.refmap.json",
   "mixins": [
-    "ItemMixin",
     "ItemStackMixin"
   ],
   "minVersion": "0.8"
