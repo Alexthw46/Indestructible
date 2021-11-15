@@ -1,5 +1,6 @@
 package alexthw.indestructible.common;
 
+import alexthw.indestructible.Config;
 import alexthw.indestructible.init.Registry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -36,7 +37,7 @@ public class CraftingBlockEntity extends BlockEntity {
             if (item.getItem() == Items.BLAZE_POWDER && !stack.isEmpty()){
                 item.shrink(1);
                 stack.enchant(Registry.INDESTRUCTIBLE.get(),1);
-                stack.setDamageValue(0);
+                if (Config.COMMON.REPAIR_ENCHANT.get()) stack.setDamageValue(0);
                 onDestroyed(state,pos);
                 if (!level.isClientSide()) level.sendBlockUpdated(pos, state,state,2); else{
                     level.addParticle(ParticleTypes.EXPLOSION,worldPosition.getX()+0.5, worldPosition.getY()+0.5, worldPosition.getZ()+0.5,0,0,0);
