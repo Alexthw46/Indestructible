@@ -36,6 +36,12 @@ public class CraftingBlockEntity extends BlockEntity {
 
             if (item.getItem() == Items.BLAZE_POWDER && !stack.isEmpty()){
                 item.shrink(1);
+                if (stack.getItem() == Items.BOOK){
+                    ItemStack stack2 = new ItemStack(Items.ENCHANTED_BOOK);
+                    CompoundTag compoundtag = stack.getOrCreateTag();
+                    stack2.setTag(compoundtag.copy());
+                    stack = stack2;
+                }
                 stack.enchant(Registry.INDESTRUCTIBLE.get(),1);
                 if (Config.COMMON.REPAIR_ENCHANT.get()) stack.setDamageValue(0);
                 onDestroyed(state,pos);
@@ -93,6 +99,10 @@ public class CraftingBlockEntity extends BlockEntity {
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
         handleUpdateTag(pkt.getTag());
+    }
+
+    public BlockPos getWorldPosition(){
+        return this.worldPosition;
     }
 
 }
