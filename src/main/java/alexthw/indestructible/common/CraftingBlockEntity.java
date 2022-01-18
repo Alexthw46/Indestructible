@@ -13,8 +13,10 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -41,8 +43,10 @@ public class CraftingBlockEntity extends BlockEntity {
                     CompoundTag compoundtag = stack.getOrCreateTag();
                     stack2.setTag(compoundtag.copy());
                     stack = stack2;
+                    EnchantedBookItem.addEnchantment(stack, new EnchantmentInstance(Registry.INDESTRUCTIBLE.get(),1));
+                }else {
+                    stack.enchant(Registry.INDESTRUCTIBLE.get(), 1);
                 }
-                stack.enchant(Registry.INDESTRUCTIBLE.get(),1);
                 if (Config.COMMON.REPAIR_ENCHANT.get()) stack.setDamageValue(0);
                 onDestroyed(state,pos);
                 if (!level.isClientSide()) level.sendBlockUpdated(pos, state,state,2); else{
