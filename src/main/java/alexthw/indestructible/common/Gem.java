@@ -39,7 +39,7 @@ public class Gem extends Item {
             blockpos = blockpos.above();
             level.setBlockAndUpdate(blockpos, block.defaultBlockState());
 
-            if (!player.getAbilities().instabuild) {
+            if (!player.isCreative()) {
                 stack.shrink(1);
             }
         }

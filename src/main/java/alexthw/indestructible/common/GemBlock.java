@@ -39,8 +39,8 @@ public class GemBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState pState, Level level, BlockPos pos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         BlockEntity te = level.getBlockEntity(pos);
-        if (te instanceof CraftingBlockEntity){
-            ((CraftingBlockEntity) te).onActivated(pState,pos,pPlayer,pHand);
+        if (te instanceof CraftingBlockEntity cbe){
+            cbe.onActivated(pState,pos,pPlayer,pHand);
         }
         return super.use(pState, level, pos, pPlayer, pHand, pHit);
     }
