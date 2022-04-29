@@ -20,7 +20,7 @@ public class IndestructibleEnchantment extends Enchantment {
         if (pStack.isEnchanted()){
             result = result && EnchantmentHelper.getItemEnchantmentLevel(this,pStack) < 1;
         }
-        return result && !pStack.getItem().getTags().contains(ModTag.Items.BLACKLIST.getName());
+        return result && !pStack.is(ModTag.Items.BLACKLIST);
     }
 
     public int getMaxLevel() {
