@@ -77,9 +77,14 @@ public class CraftingBlockEntity extends BlockEntity {
     }
 
     @Override
+    public CompoundTag getUpdateTag() {
+        return this.saveWithoutMetadata();
+    }
+
+    @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        stack = ItemStack.of(tag.getCompound("stack"));
+        this.stack = ItemStack.of(tag.getCompound("stack"));
     }
 
     @Override
@@ -96,7 +101,7 @@ public class CraftingBlockEntity extends BlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        handleUpdateTag(pkt.getTag());
+        if (pkt.getTag() != null) handleUpdateTag(pkt.getTag());
     }
 
     public BlockPos getWorldPosition(){

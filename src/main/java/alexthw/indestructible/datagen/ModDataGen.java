@@ -22,10 +22,10 @@ public final class ModDataGen {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         BlockTagsProvider btp = new ModBlockTagProvider(gen,existingFileHelper);
 
-        gen.addProvider(btp);
-        gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
-        gen.addProvider(new ModBlockStatesProvider(gen, existingFileHelper));
-        gen.addProvider(new ModItemTagProvider(gen, btp,existingFileHelper));
-        gen.addProvider(new ModRecipeProvider(gen));
+        gen.addProvider(event.includeServer(), btp);
+        gen.addProvider(event.includeServer(), new ModItemModelProvider(gen, existingFileHelper));
+        gen.addProvider(event.includeServer(), new ModBlockStatesProvider(gen, existingFileHelper));
+        gen.addProvider(event.includeServer(), new ModItemTagProvider(gen, btp,existingFileHelper));
+        gen.addProvider(event.includeServer(), new ModRecipeProvider(gen));
     }
 }
