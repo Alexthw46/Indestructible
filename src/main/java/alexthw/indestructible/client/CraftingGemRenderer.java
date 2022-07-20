@@ -49,7 +49,7 @@ public class CraftingGemRenderer implements BlockEntityRenderer<CraftingBlockEnt
                             if (i == 0 && j == 0) continue;
                             BlockPos blockpos = worldPosition.offset(i, 0, j);
                             if (mc.level.random.nextInt() % 5 == 0 )
-                            mc.level.addParticle(ParticleTypes.ENCHANT, blockpos.getX() + 0.5 - i, blockpos.getY() + 0.6, blockpos.getZ() + 0.5 - j, i/6, 0, j/6);
+                                mc.level.addParticle(ParticleTypes.ENCHANT, blockpos.getX() + 0.5 - i, blockpos.getY() + 0.6, blockpos.getZ() + 0.5 - j, i/6, 0, j/6);
                         }
                     }
                 }

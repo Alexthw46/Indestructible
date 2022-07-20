@@ -18,7 +18,7 @@ public class IndestructibleEnchantment extends Enchantment {
     public boolean canEnchant(ItemStack pStack) {
         boolean result = pStack.isDamageableItem() || super.canEnchant(pStack) || (pStack.getItem() == Items.BOOK && isAllowedOnBooks());
         if (pStack.isEnchanted()){
-            result = result && EnchantmentHelper.getItemEnchantmentLevel(this,pStack) < 1;
+            result = result && pStack.getEnchantmentLevel(this) < 1;
         }
         return result && !pStack.is(ModTag.Items.BLACKLIST);
     }

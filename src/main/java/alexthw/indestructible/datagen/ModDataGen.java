@@ -5,7 +5,7 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 import static alexthw.indestructible.IndestructibleMod.MODID;
 
@@ -23,8 +23,8 @@ public final class ModDataGen {
         BlockTagsProvider btp = new ModBlockTagProvider(gen,existingFileHelper);
 
         gen.addProvider(event.includeServer(), btp);
-        gen.addProvider(event.includeServer(), new ModItemModelProvider(gen, existingFileHelper));
-        gen.addProvider(event.includeServer(), new ModBlockStatesProvider(gen, existingFileHelper));
+        gen.addProvider(event.includeClient(), new ModItemModelProvider(gen, existingFileHelper));
+        gen.addProvider(event.includeClient(), new ModBlockStatesProvider(gen, existingFileHelper));
         gen.addProvider(event.includeServer(), new ModItemTagProvider(gen, btp,existingFileHelper));
         gen.addProvider(event.includeServer(), new ModRecipeProvider(gen));
     }

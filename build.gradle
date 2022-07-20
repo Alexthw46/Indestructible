@@ -16,6 +16,8 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
+
 
 version = "${mc_version}-${mod_version}"
 group = 'alexthw.indestructible' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -103,7 +105,7 @@ mixin {
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.19-41.0.1'
+    minecraft 'net.minecraftforge:forge:1.19-41.0.100'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 

@@ -11,6 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class Gem extends Item {
     public Gem(Properties pProperties) {
         super(pProperties);

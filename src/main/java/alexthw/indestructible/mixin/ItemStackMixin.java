@@ -1,7 +1,6 @@
 package alexthw.indestructible.mixin;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +16,7 @@ public abstract class ItemStackMixin {
 
     @Inject(at = @At(value = "HEAD"), method = "isDamageableItem", cancellable = true)
     private void handleIndestructibleEnchantment(CallbackInfoReturnable<Boolean> cir) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(INDESTRUCTIBLE.get(), this.copy()) > 0){
+        if (this.copy().getEnchantmentLevel(INDESTRUCTIBLE.get()) > 0){
             cir.setReturnValue(false);
         }
     }
