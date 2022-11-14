@@ -15,10 +15,10 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.ItemStack;
 
 public class CraftingGemRenderer implements BlockEntityRenderer<CraftingBlockEntity> {
-    ItemStack gem;
+    ItemStack gem; //cache
 
     public CraftingGemRenderer(BlockEntityRendererProvider.Context context) {
-        gem = new ItemStack(Registry.INDESTRUCTIBLE_GEM.get(),1);
+        gem = Registry.INDESTRUCTIBLE_GEM.get().getDefaultInstance();
     }
 
     @Override
