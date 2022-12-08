@@ -15,15 +15,11 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(IndestructibleMod.MODID)
 public class IndestructibleMod
 {
     public static final String MODID = "indestructible";
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public static ResourceLocation rl(String path){
         return new ResourceLocation(MODID,path);
@@ -51,7 +47,7 @@ public class IndestructibleMod
 
     @OnlyIn(Dist.CLIENT)
     public void setupClient(final FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(Registry.CRAFTING_BLOCK.get(), CraftingGemRenderer::new);
+        BlockEntityRenderers.register(Registry.CRAFTING_BLOCK.get(), context -> new CraftingGemRenderer());
     }
 
 }

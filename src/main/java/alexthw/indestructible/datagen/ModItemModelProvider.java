@@ -1,13 +1,13 @@
 package alexthw.indestructible.datagen;
 
 import alexthw.indestructible.IndestructibleMod;
-import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.HashSet;
@@ -34,17 +34,17 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     private void generatedItem(RegistryObject<Item> i) {
-        String name = Registry.ITEM.getKey(i.get()).getPath();
+        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
         withExistingParent(name, GENERATED).texture("layer0", rl("item/" + name));
     }
 
     private void blockGeneratedItem(RegistryObject<Item> i) {
-        String name = Registry.ITEM.getKey(i.get()).getPath();
+        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
         withExistingParent(name, GENERATED).texture("layer0", rl("block/" + name));
     }
 
     private void blockItem(RegistryObject<Item> i) {
-        String name = Registry.ITEM.getKey(i.get()).getPath();
+        String name = ForgeRegistries.ITEMS.getKey(i.get()).getPath();
         getBuilder(name).parent(new ModelFile.UncheckedModelFile(rl("block/" + name)));
     }
 

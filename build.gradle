@@ -16,7 +16,6 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 
 
 version = "${mc_version}-${mod_version}"
@@ -27,7 +26,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: '1.19.3'
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -104,9 +103,9 @@ mixin {
 
 dependencies {
 
-    minecraft 'net.minecraftforge:forge:1.19.2-43.1.52'
+    minecraft 'net.minecraftforge:forge:1.19.3-44.0.1'
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 }
 

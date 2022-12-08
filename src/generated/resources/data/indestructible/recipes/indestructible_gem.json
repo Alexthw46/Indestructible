@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "SSS",
-    "SDS",
-    "SSS"
-  ],
+  "category": "misc",
   "key": {
     "D": {
       "item": "minecraft:diamond"
@@ -13,6 +9,11 @@
       "item": "minecraft:netherite_scrap"
     }
   },
+  "pattern": [
+    "SSS",
+    "SDS",
+    "SSS"
+  ],
   "result": {
     "item": "indestructible:indestructible_gem"
   }

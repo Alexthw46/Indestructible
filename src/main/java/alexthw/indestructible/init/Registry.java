@@ -5,7 +5,6 @@ import alexthw.indestructible.common.Gem;
 import alexthw.indestructible.common.GemBlock;
 import alexthw.indestructible.common.IndestructibleEnchantment;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -40,7 +39,7 @@ public class Registry {
 
     static {
         INDESTRUCTIBLE = ENCHANTMENTS.register("indestructible_enchant", () -> new IndestructibleEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
-        INDESTRUCTIBLE_GEM = ITEMS.register("indestructible_gem", () -> new Gem(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS).fireResistant().rarity(Rarity.RARE)));
+        INDESTRUCTIBLE_GEM = ITEMS.register("indestructible_gem", () -> new Gem(new Item.Properties().fireResistant().rarity(Rarity.RARE)));
         GEM_BLOCK = BLOCKS.register("gem_crafting_block", ()-> new GemBlock(BlockBehaviour.Properties
                 .of(Material.AMETHYST)
                 .noOcclusion()
