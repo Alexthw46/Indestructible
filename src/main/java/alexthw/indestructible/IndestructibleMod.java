@@ -4,9 +4,11 @@ import alexthw.indestructible.client.CraftingGemRenderer;
 import alexthw.indestructible.init.Registry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -15,6 +17,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import static alexthw.indestructible.init.Registry.INDESTRUCTIBLE_GEM;
 
 @Mod(IndestructibleMod.MODID)
 public class IndestructibleMod
@@ -39,6 +43,8 @@ public class IndestructibleMod
             bus.addListener(this::setupClient);
             return new Object();
         });
+        bus.addListener((CreativeModeTabEvent.BuildContents event) -> event.registerSimple(CreativeModeTabs.INGREDIENTS,
+                INDESTRUCTIBLE_GEM.get()));
     }
 
     public void setup(final FMLCommonSetupEvent event) {
