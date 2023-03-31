@@ -22,10 +22,6 @@ public class IndestructibleEnchantment extends Enchantment {
         return result && !pStack.is(ModTag.Items.BLACKLIST);
     }
 
-    public int getMaxLevel() {
-        return 1;
-    }
-
     @Override
     public boolean isAllowedOnBooks() {
         return COMMON.ALLOW_ON_BOOKS.get();
