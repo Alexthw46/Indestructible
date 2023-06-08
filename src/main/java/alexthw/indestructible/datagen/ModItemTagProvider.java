@@ -15,7 +15,7 @@ import static alexthw.indestructible.IndestructibleMod.MODID;
 public class ModItemTagProvider extends ItemTagsProvider {
 
     public ModItemTagProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper, CompletableFuture<HolderLookup.Provider> provider) {
-        super(dataGenerator.getPackOutput(), provider, blockTagProvider, MODID, existingFileHelper);
+        super(dataGenerator.getPackOutput(), provider, blockTagProvider.contentsGetter(), MODID, existingFileHelper);
     }
 
     @Override

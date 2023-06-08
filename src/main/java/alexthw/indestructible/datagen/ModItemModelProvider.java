@@ -22,7 +22,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     private static final ResourceLocation GENERATED = new ResourceLocation("item/generated");
 
     public ModItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, IndestructibleMod.MODID, existingFileHelper);
+        super(generator.getPackOutput(), IndestructibleMod.MODID, existingFileHelper);
     }
 
     @Override

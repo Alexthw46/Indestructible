@@ -14,7 +14,7 @@ import java.util.Set;
 public class ModBlockStatesProvider extends BlockStateProvider {
 
     public ModBlockStatesProvider(DataGenerator gen, ExistingFileHelper existingFileHelper) {
-        super(gen, IndestructibleMod.MODID, existingFileHelper);
+        super(gen.getPackOutput(), IndestructibleMod.MODID, existingFileHelper);
     }
 
     @Override

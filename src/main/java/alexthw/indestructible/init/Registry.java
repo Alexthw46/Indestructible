@@ -11,7 +11,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,7 +40,7 @@ public class Registry {
         INDESTRUCTIBLE = ENCHANTMENTS.register("indestructible_enchant", () -> new IndestructibleEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
         INDESTRUCTIBLE_GEM = ITEMS.register("indestructible_gem", () -> new Gem(new Item.Properties().fireResistant().rarity(Rarity.RARE)));
         GEM_BLOCK = BLOCKS.register("gem_crafting_block", ()-> new GemBlock(BlockBehaviour.Properties
-                .of(Material.AMETHYST)
+                .of()
                 .noOcclusion()
                 .noCollission()));
     }
