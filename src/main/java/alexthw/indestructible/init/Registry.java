@@ -35,7 +35,8 @@ public class Registry {
     static {
         INDESTRUCTIBLE_GEM = ITEMS.register("indestructible_gem", () -> new Gem(new Item.Properties().fireResistant().rarity(Rarity.RARE)));
         GEM_BLOCK = BLOCKS.register("gem_crafting_block", () -> new GemBlock(BlockBehaviour.Properties
-                .ofFullCopy(Blocks.AMETHYST_BLOCK)
+                .ofFullCopy(Blocks.AMETHYST_CLUSTER)
+                .instabreak()
                 .noOcclusion()
                 .noCollission()));
     }
