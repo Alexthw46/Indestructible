@@ -1,4 +1,5 @@
 {
   "enchantment.indestructible.indestructible_enchant": "Indestructible",
-  "item.indestructible.indestructible_gem": "Indestructible Gem"
+  "item.indestructible.indestructible_gem": "Indestructible Gem",
+  "item.indestructible.gem.tooltip": "A gem that can make your tools and armor unbreakable. Shift-right-click on an anvil to place the gem, then place the item on it and use a catalyst like blaze powder to apply it."
 }

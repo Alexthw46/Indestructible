@@ -4,54 +4,45 @@ import alexthw.indestructible.client.CraftingGemRenderer;
 import alexthw.indestructible.init.Registry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 @Mod(IndestructibleMod.MODID)
-public class IndestructibleMod
-{
+public class IndestructibleMod {
     public static final String MODID = "indestructible";
 
-    private static final Logger LOGGER = LogManager.getLogger();
 
-    public static ResourceLocation rl(String path){
-        return new ResourceLocation(MODID,path);
+    public static ResourceLocation rl(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 
-    public IndestructibleMod() {
+    public IndestructibleMod(IEventBus modEventBus, ModContainer modContainer) {
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
-
-        MinecraftForge.EVENT_BUS.register(this);
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(this::setup);
-
-        Registry.init(bus);
-
-        DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> {
-            bus.addListener(this::setupClient);
-            return new Object();
-        });
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
+        Registry.init(modEventBus);
+        modEventBus.addListener(this::addToCreativeTab);
+        if (FMLEnvironment.dist.isClient()) modEventBus.addListener(this::setupClient);
     }
 
-    public void setup(final FMLCommonSetupEvent event) {
-        Networking.init();
-    }
 
     @OnlyIn(Dist.CLIENT)
     public void setupClient(final FMLClientSetupEvent event) {
         BlockEntityRenderers.register(Registry.CRAFTING_BLOCK.get(), CraftingGemRenderer::new);
+    }
+
+    @SubscribeEvent
+    public void addToCreativeTab(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS)
+            event.accept(Registry.INDESTRUCTIBLE_GEM.get());
     }
 
 }
