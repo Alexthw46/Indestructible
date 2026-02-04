@@ -3,10 +3,8 @@ package alexthw.indestructible.datagen;
 import alexthw.indestructible.init.ModTag;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -15,8 +13,8 @@ import static alexthw.indestructible.IndestructibleMod.MODID;
 
 public class ModItemTagProvider extends ItemTagsProvider {
 
-    public ModItemTagProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper, CompletableFuture<HolderLookup.Provider> provider) {
-        super(dataGenerator.getPackOutput(), provider, blockTagProvider.contentsGetter(), MODID, existingFileHelper);
+    public ModItemTagProvider(DataGenerator dataGenerator, CompletableFuture<HolderLookup.Provider> provider) {
+        super(dataGenerator.getPackOutput(), provider, MODID);
     }
 
 

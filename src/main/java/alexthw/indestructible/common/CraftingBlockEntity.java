@@ -12,15 +12,18 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Unit;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import static alexthw.indestructible.init.ModTag.Items.BLACKLIST;
 
@@ -37,14 +40,14 @@ public class CraftingBlockEntity extends BlockEntity {
     }
 
 
-    public ItemInteractionResult onActivated(BlockState state, BlockPos pos, Player player, InteractionHand hand) {
+    public InteractionResult onActivated(BlockState state, BlockPos pos, Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND && level != null) {
 
             ItemStack item = player.getItemInHand(hand);
 
             if (item.is(ModTag.Items.CATALYST) && !stack.isEmpty()) {
                 item.shrink(1);
-                stack.set(DataComponents.UNBREAKABLE, new Unbreakable(true));
+                stack.set(DataComponents.UNBREAKABLE, Unit.INSTANCE);
                 if (Config.COMMON.REPAIR_ENCHANT.get()) stack.setDamageValue(0);
                 onDestroyed(state, pos);
                 if (!level.isClientSide()) level.sendBlockUpdated(pos, state, state, 2);
@@ -53,12 +56,12 @@ public class CraftingBlockEntity extends BlockEntity {
                     this.level.playLocalSound(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F, false);
                 }
                 level.removeBlock(pos, false);
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else if (item.isEmpty() && !stack.isEmpty()) {
                 player.addItem(stack);
                 stack = ItemStack.EMPTY;
                 if (!level.isClientSide()) level.sendBlockUpdated(pos, state, state, 2);
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else if (!item.isEmpty() && stack.isEmpty()) {
                 if (item.isDamageableItem() && !item.is(BLACKLIST)) {
                     stack = item.copy();
@@ -66,11 +69,11 @@ public class CraftingBlockEntity extends BlockEntity {
                     item.shrink(1);
                     if (item.isEmpty()) player.setItemInHand(hand, ItemStack.EMPTY);
                     if (!level.isClientSide()) level.sendBlockUpdated(pos, state, state, 2);
-                    return ItemInteractionResult.CONSUME;
+                    return InteractionResult.CONSUME;
                 }
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -79,26 +82,26 @@ public class CraftingBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
-        super.loadAdditional(tag, registries);
-        this.stack = ItemStack.parseOptional(registries, tag.getCompound("stack"));
+    protected void saveAdditional(@NonNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.store("stack", ItemStack.CODEC, stack);
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("stack", stack.saveOptional(registries));
+    protected void loadAdditional(@NonNull ValueInput input) {
+        super.loadAdditional(input);
+        stack = input.read("stack", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+    }
+
+    @Override
+    public void onDataPacket(@NonNull Connection net, @NonNull ValueInput valueInput) {
+        super.onDataPacket(net, valueInput);
+        handleUpdateTag(valueInput);
     }
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(@NotNull Connection net, @NotNull ClientboundBlockEntityDataPacket pkt, HolderLookup.@NotNull Provider lookupProvider) {
-        super.onDataPacket(net, pkt, lookupProvider);
-        handleUpdateTag(pkt.getTag(), lookupProvider);
     }
 
     public BlockPos getWorldPosition() {

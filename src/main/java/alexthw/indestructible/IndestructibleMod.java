@@ -1,12 +1,11 @@
 package alexthw.indestructible;
 
+import alexthw.indestructible.client.ClientEventHandler;
 import alexthw.indestructible.client.CraftingGemRenderer;
 import alexthw.indestructible.init.Registry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -21,8 +20,8 @@ public class IndestructibleMod {
     public static final String MODID = "indestructible";
 
 
-    public static ResourceLocation rl(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    public static Identifier rl(String path) {
+        return Identifier.fromNamespaceAndPath(MODID, path);
     }
 
     public IndestructibleMod(IEventBus modEventBus, ModContainer modContainer) {
@@ -30,13 +29,7 @@ public class IndestructibleMod {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
         Registry.init(modEventBus);
         modEventBus.addListener(this::addToCreativeTab);
-        if (FMLEnvironment.dist.isClient()) modEventBus.addListener(this::setupClient);
-    }
-
-
-    @OnlyIn(Dist.CLIENT)
-    public void setupClient(final FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(Registry.CRAFTING_BLOCK.get(), CraftingGemRenderer::new);
+        if (FMLEnvironment.getDist().isClient()) modEventBus.addListener(ClientEventHandler::setupClient);
     }
 
     @SubscribeEvent

@@ -41,6 +41,6 @@ This mod adds the indestructible gem and enchantment. Place it on an anvil, clic
     modId="minecraft"
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[1.21,1.21.2)"
+    versionRange="[1.21.11,26)"
     ordering="NONE"
     side="BOTH"

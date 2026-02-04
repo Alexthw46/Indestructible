@@ -19,13 +19,13 @@ import static net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE;
 
 public class Registry {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.createItems(MODID);
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(MODID);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BLOCK_ENTITY_TYPE, MODID);
 
     public static final DeferredHolder<Item, Item> INDESTRUCTIBLE_GEM;
     public static final DeferredHolder<Block, Block> GEM_BLOCK;
-
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CraftingBlockEntity>> CRAFTING_BLOCK;
     public static void init(IEventBus bus) {
         ITEMS.register(bus);
         BLOCKS.register(bus);
@@ -33,18 +33,14 @@ public class Registry {
     }
 
     static {
-        INDESTRUCTIBLE_GEM = ITEMS.register("indestructible_gem", () -> new Gem(new Item.Properties().fireResistant().rarity(Rarity.RARE)));
-        GEM_BLOCK = BLOCKS.register("gem_crafting_block", () -> new GemBlock(BlockBehaviour.Properties
-                .ofFullCopy(Blocks.AMETHYST_CLUSTER)
+        INDESTRUCTIBLE_GEM = ITEMS.registerItem("indestructible_gem", (properties) -> new Gem(properties.fireResistant().rarity(Rarity.RARE)));
+        GEM_BLOCK = BLOCKS.registerBlock("gem_crafting_block", (props) -> new GemBlock(props
                 .instabreak()
                 .noOcclusion()
-                .noCollission()));
+                .noCollision()
+        ));
+        CRAFTING_BLOCK = BLOCK_ENTITIES.register("crafting_gem", () -> new BlockEntityType<>(CraftingBlockEntity::new, Registry.GEM_BLOCK.get()));
     }
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CraftingBlockEntity>> CRAFTING_BLOCK = BLOCK_ENTITIES.register(
-            "crafting_gem", () -> BlockEntityType.Builder
-                    .of(CraftingBlockEntity::new, Registry.GEM_BLOCK.get())
-                    .build(null)
-    );
 
 }

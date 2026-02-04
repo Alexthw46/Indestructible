@@ -3,7 +3,6 @@ package alexthw.indestructible.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -13,8 +12,8 @@ import static alexthw.indestructible.IndestructibleMod.MODID;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
 
-    public ModBlockTagProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper, CompletableFuture<HolderLookup.Provider> provider) {
-        super(dataGenerator.getPackOutput(), provider, MODID, existingFileHelper);
+    public ModBlockTagProvider(DataGenerator dataGenerator, CompletableFuture<HolderLookup.Provider> provider) {
+        super(dataGenerator.getPackOutput(), provider, MODID);
     }
 
     @Override

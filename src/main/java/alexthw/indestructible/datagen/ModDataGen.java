@@ -4,7 +4,6 @@ import net.minecraft.data.DataGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 
@@ -18,16 +17,14 @@ public final class ModDataGen {
     }
 
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event) {
+    public static void gatherData(GatherDataEvent.Client event) {
         DataGenerator gen = event.getGenerator();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         var provider = event.getLookupProvider();
-        BlockTagsProvider btp = new ModBlockTagProvider(gen, existingFileHelper, provider);
+        BlockTagsProvider btp = new ModBlockTagProvider(gen, provider);
 
-        gen.addProvider(event.includeServer(), btp);
-        gen.addProvider(event.includeClient(), new ModItemModelProvider(gen, existingFileHelper));
-        gen.addProvider(event.includeClient(), new ModBlockStatesProvider(gen, existingFileHelper));
-        gen.addProvider(event.includeServer(), new ModItemTagProvider(gen, btp, existingFileHelper, provider));
-        gen.addProvider(event.includeServer(), new ModRecipeProvider(gen, provider));
+        gen.addProvider(true, btp);
+        gen.addProvider(true, new ModModelProvider(gen));
+        gen.addProvider(true, new ModItemTagProvider(gen, provider));
+        gen.addProvider(true, new ModRecipeProvider.Runner(gen.getPackOutput(), provider));
     }
 }
